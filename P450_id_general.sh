@@ -1,6 +1,6 @@
 #### Nv_P450id
 cd /data2/shane/Documents/Nezara_midgut_atlas/Nv_P450/validation
-
+mkdir P450_search
 mkdir draft_outputs
 for i in $(ls ./proteomes/* | grep -E "*unigene.faa$")
 do
@@ -8,7 +8,7 @@ do
   /data2/shane/Applications/custom/linearize.fasta.sh $i > temp.faa
   mv temp.faa $i
   
-  mkdir P450_search
+  
   ### get basename and make directory
   a=$(basename $i)
   mkdir ./P450_search/$a
@@ -16,7 +16,7 @@ do
   
   
   ############### BLAST
-  /data2/shane/Applications/custom/recip_blast.sh /data2/shane/Documents/Nezara_midgut_atlas/Nv_P450/ref/curated_P450s/Combined_P450_Manual.faa ../../proteomes/$a 1e-7 60 2
+  /data2/shane/Applications/custom/recip_blast.sh /data2/shane/Documents/Nezara_midgut_atlas/Nv_P450/ref/curated_P450s/P450_homepage_combined.faa ../../proteomes/$a 1e-3 40 2
   
   ########################################## Length and Pfam filters
   mkdir filter
