@@ -16,18 +16,18 @@ do
   
   
   ############### BLAST
-  /data2/shane/Applications/custom/recip_blast.sh /data2/shane/Documents/Nezara_midgut_atlas/Nv_P450/ref/curated_P450s/P450_homepage_combined.faa ../../proteomes/$a 1e-3 40 2
+  /data2/shane/Applications/custom/recip_blast.sh /data2/shane/Documents/Nezara_midgut_atlas/Nv_P450/ref/curated_P450s/P450_homepage_combined.faa ../../proteomes/$a 1 10 4
   
   ########################################## Length and Pfam filters
   mkdir filter
   ################ Lenght filter
   /data2/shane/Applications/custom/fasta_seq_len_filter.py ./blast/recip_blast.faa 350 650 > ./filter/$a'_P450_length.faa'
-  echo "Numer of genes After length filter: ______________" $(grep ">" ./filter/$a'_P450_length.faa' | wc -l)
+  echo "Numer of genes After length filter: ______________" $(grep ">" ./filter/$a'_P450_length.faa' | wc -l) >> summary.txt
   
   ###############Xref with IPscan
   /home/pioannidis/Programs/interproscan-5.30-69.0/interproscan.sh -appl pfam -i ./filter/$a'_P450_length.faa' -o ./filter/$a'_ipscan.tsv' -f TSV
   grep "PF00067" ./filter/$a'_ipscan.tsv' | cut -f 1 | sort -u | /data2/shane/Applications/custom/unigene_fa_sub.sh ./filter/$a'_P450_length.faa' - > ./filter/$a'_length_ipscan.faa'
-  echo "Number of genes with After PFAM filter:______________" $(grep ">" ./filter/$a'_length_ipscan.faa' | wc -l)
+  echo "Number of genes with After PFAM filter:______________" $(grep ">" ./filter/$a'_length_ipscan.faa' | wc -l) >> summary.txt
   
   ############## ALIGN AND TREE
   ### manual remove
